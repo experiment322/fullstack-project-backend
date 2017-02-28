@@ -1,10 +1,11 @@
-package com.mad.backend.services;
+package com.mad.backend.services.impls;
 
 import com.mad.backend.dtos.ProductDto;
 import com.mad.backend.models.Product;
 import com.mad.backend.models.Supplier;
 import com.mad.backend.repositories.ProductRepository;
 import com.mad.backend.repositories.SupplierRepository;
+import com.mad.backend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void createProduct(ProductDto productDto) {
+    public ProductDto createProduct(ProductDto productDto) {
         Supplier supplier = supplierRepository.findOne(productDto.getSupplierId());
         if (supplier != null) {
             Product product = new Product();
@@ -48,11 +49,13 @@ public class ProductServiceImpl implements ProductService {
             product.setName(productDto.getName());
             product.setDescription(productDto.getDescription());
             productRepository.save(product);
+            return new ProductDto(product);
         }
+        return null;
     }
 
     @Override
-    public void updateProduct(ProductDto productDto) {
+    public ProductDto updateProduct(ProductDto productDto) {
         Product product = productRepository.findOne(productDto.getId());
         Supplier supplier = supplierRepository.findOne(productDto.getSupplierId());
         if (product != null && supplier != null) {
@@ -62,13 +65,18 @@ public class ProductServiceImpl implements ProductService {
             product.setName(productDto.getName());
             product.setDescription(productDto.getDescription());
             productRepository.save(product);
+            return new ProductDto(product);
         }
+        return null;
     }
 
     @Override
-    public void deleteProduct(Integer productId) {
-        if (productRepository.exists(productId)) {
+    public ProductDto deleteProduct(Integer productId) {
+        Product product = productRepository.findOne(productId);
+        if (product != null) {
             productRepository.delete(productId);
+            return new ProductDto(product);
         }
+        return null;
     }
 }

@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface ProductService {
 
-    public List<ProductDto> getAllProducts();
+    List<ProductDto> getAllProducts();
 
-    public void createProduct(ProductDto productDto);
+    ProductDto createProduct(ProductDto productDto);
 
-    public void updateProduct(ProductDto productDto);
+    ProductDto updateProduct(ProductDto productDto);
 
-    public void deleteProduct(Integer productId);
+    ProductDto deleteProduct(Integer productId);
 }

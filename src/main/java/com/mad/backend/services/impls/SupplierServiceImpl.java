@@ -1,9 +1,10 @@
-package com.mad.backend.services;
+package com.mad.backend.services.impls;
 
 import com.mad.backend.dtos.SupplierDto;
 import com.mad.backend.models.Supplier;
 import com.mad.backend.repositories.ProductRepository;
 import com.mad.backend.repositories.SupplierRepository;
+import com.mad.backend.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,29 +38,34 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public void createSupplier(SupplierDto supplierDto) {
+    public SupplierDto createSupplier(SupplierDto supplierDto) {
         Supplier supplier = new Supplier();
         supplier.setName(supplierDto.getName());
         supplier.setAddress(supplierDto.getAddress());
         supplierRepository.save(supplier);
+        return new SupplierDto(supplier);
     }
 
     @Override
-    public void updateSupplier(SupplierDto supplierDto) {
+    public SupplierDto updateSupplier(SupplierDto supplierDto) {
         Supplier supplier = supplierRepository.findOne(supplierDto.getId());
         if (supplier != null) {
             supplier.setName(supplierDto.getName());
             supplier.setAddress(supplierDto.getAddress());
             supplierRepository.save(supplier);
+            return new SupplierDto(supplier);
         }
+        return null;
     }
 
     @Override
-    public void deleteSupplier(Integer supplierId) {
+    public SupplierDto deleteSupplier(Integer supplierId) {
         Supplier supplier = supplierRepository.findOne(supplierId);
         if (supplier != null) {
             productRepository.delete(supplier.getProducts());
             supplierRepository.delete(supplierId);
+            return new SupplierDto(supplier);
         }
+        return null;
     }
 }

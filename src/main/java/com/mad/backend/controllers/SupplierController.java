@@ -1,5 +1,6 @@
 package com.mad.backend.controllers;
 
+import com.mad.backend.dtos.ResponseDto;
 import com.mad.backend.dtos.SupplierDto;
 import com.mad.backend.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +23,22 @@ public class SupplierController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<SupplierDto> listSuppliers() {
-        return supplierService.getAllSuppliers();
+    public ResponseDto<List<SupplierDto>> listSuppliers() {
+        return new ResponseDto<>(supplierService.getAllSuppliers());
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public void createSupplier(@RequestBody SupplierDto supplierDto) {
-        supplierService.createSupplier(supplierDto);
+    public ResponseDto<SupplierDto> createSupplier(@RequestBody SupplierDto supplierDto) {
+        return new ResponseDto<>(supplierService.createSupplier(supplierDto));
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public void updateSupplier(@RequestBody SupplierDto supplierDto) {
-        supplierService.updateSupplier(supplierDto);
+    public ResponseDto<SupplierDto> updateSupplier(@RequestBody SupplierDto supplierDto) {
+        return new ResponseDto<>(supplierService.updateSupplier(supplierDto));
     }
 
     @RequestMapping(value = "/delete/{supplierId}", method = RequestMethod.DELETE)
-    public void deleteSupplier(@PathVariable Integer supplierId) {
-        supplierService.deleteSupplier(supplierId);
+    public ResponseDto<SupplierDto> deleteSupplier(@PathVariable Integer supplierId) {
+        return new ResponseDto<>(supplierService.deleteSupplier(supplierId));
     }
 }

@@ -15,6 +15,9 @@ public class ProductDto {
     private String description;
 
     public ProductDto() {
+        // initialize with non-existing ids to prevent exception throwing when used by repositories
+        this.id = -1;
+        this.supplierId = -1;
     }
 
     public ProductDto(Product product) {

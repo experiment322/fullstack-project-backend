@@ -12,6 +12,8 @@ public class SupplierDto {
     private String address;
 
     public SupplierDto() {
+        // initialize with non-existing ids to prevent exception throwing when used by repositories
+        this.id = -1;
     }
 
     public SupplierDto(Supplier supplier) {

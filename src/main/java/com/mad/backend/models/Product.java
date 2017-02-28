@@ -20,6 +20,7 @@ public class Product {
     private String description;
 
     public Product() {
+        // JPA constructor
     }
 
     public Integer getId() {

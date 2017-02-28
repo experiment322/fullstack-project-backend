@@ -14,10 +14,11 @@ public class Supplier {
     private Integer id;
     private String name;
     private String address;
-    @OneToMany(mappedBy = "supplier")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "supplier")
     private List<Product> products;
 
     public Supplier() {
+        // JPA constructor
     }
 
     public Integer getId() {
