@@ -11,8 +11,9 @@ import java.util.List;
 /**
  * Created by alex on 2/25/17.
  */
+@CrossOrigin
 @RestController
-@RequestMapping(value = "/supplier")
+@RequestMapping(value = "/api/supplier")
 public class SupplierController {
 
     private final SupplierService supplierService;
