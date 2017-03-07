@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * Created by alex on 2/25/17.
  */
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/product")
 public class ProductController {
