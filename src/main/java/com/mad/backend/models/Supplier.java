@@ -11,9 +11,15 @@ public class Supplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Integer id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String address;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "supplier")
     private List<Product> products;
 

@@ -10,13 +10,24 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Integer id;
+
+    @Column(nullable = false)
     private Integer price;
+
+    @Column(nullable = false)
     private Integer quantity;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier_id")
+    @Column(nullable = false)
     private Supplier supplier;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String description;
 
     public Product() {
