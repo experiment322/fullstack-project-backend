@@ -5,6 +5,7 @@ Below you will find some information on how to perform common tasks.
 ## Table of Contents
 
 - [Adding a frontend](#adding-a-frontend)
+- [Connecting to MySQL](#connecting-to-mysql)
 - [Building](#building)
 - [Running](#running)
 
@@ -16,13 +17,24 @@ Spring Boot will automatically add static web resources located within any of th
 
 Here you can add `index.html` which will be automatically mapped to `/`, the rest of the files being mapped to their path relative to one of the directories mentioned above.
 
->Note: Make sure to have the resources paths(css, js etc.) in frontend relative to this public path.
+>Note: Make sure to have the paths of the resources(css, js etc.) in frontend relative to this public path.
+
+## Connecting to MySQL
+
+First of all, make sure that MySQL server is running by executing **`service mysql status`**.
+
+Then create a new schema and change the following in `/src/main/resources/application.properties`:
+```INI
+spring.datasource.url=jdbc:mysql://localhost:3306/[insert_new_schema_name_here]?useSSL=false
+spring.datasource.username=[insert_your_mysql_username_here]
+spring.datasource.password=[insert_your_mysql_password_here]
+```
 
 ## Building
 
-To build this project you need to have `Maven` installed and available on `PATH`. Check it with **`mvn -v`**.
+To build this project you need to have Maven installed and available on `PATH`. Check it with **`mvn -v`**.
 
-After `Maven` is installed run **`mvn package`** in the root folder of the project. This will build a standalone `.jar` with all the dependencies needed inside.
+After Maven is installed run **`mvn package`** in the root folder of the project. This will build a standalone `.jar` with all the dependencies needed inside.
 
 ## Running
 
