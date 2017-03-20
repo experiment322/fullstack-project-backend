@@ -4,7 +4,7 @@ Below you will find some information on how to perform common tasks.
 
 ## Table of Contents
 
-- [Adding a frontend](#frontend)
+- [Adding a frontend](#adding-a-frontend)
 - [Building](#building)
 - [Running](#running)
 
