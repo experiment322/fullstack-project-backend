@@ -1,6 +1,7 @@
 package com.mad.backend.dtos;
 
 import com.mad.backend.models.Product;
+import com.mad.backend.models.Supplier;
 
 /**
  * Created by alex on 2/25/17.
@@ -15,9 +16,7 @@ public class ProductDto {
     private String description;
 
     public ProductDto() {
-        // initialize with non-existing ids to prevent exception throwing when used by repositories
-        this.id = -1;
-        this.supplierId = -1;
+        // REST constructor
     }
 
     public ProductDto(Product product) {
@@ -27,6 +26,21 @@ public class ProductDto {
         this.supplierId = product.getSupplier().getId();
         this.name = product.getName();
         this.description = product.getDescription();
+    }
+
+    public Product transformBack() {
+        Supplier supplier = new Supplier();
+        supplier.setId(this.supplierId);
+
+        Product product = new Product();
+        product.setId(this.id);
+        product.setPrice(this.price);
+        product.setQuantity(this.quantity);
+        product.setSupplier(supplier);
+        product.setName(this.name);
+        product.setDescription(this.description);
+
+        return product;
     }
 
     public Integer getId() {

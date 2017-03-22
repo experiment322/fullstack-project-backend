@@ -23,8 +23,8 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseDto<List<ProductDto>> listProducts() {
-        return new ResponseDto<>(productService.getAllProducts());
+    public ResponseDto<List<ProductDto>> retrieveProducts() {
+        return new ResponseDto<>(productService.retrieveProducts());
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -38,7 +38,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/delete/{productId}", method = RequestMethod.DELETE)
-    public ResponseDto<ProductDto> deleteProduct(@PathVariable Integer productId) {
+    public ResponseDto<Integer> deleteProduct(@PathVariable Integer productId) {
         return new ResponseDto<>(productService.deleteProduct(productId));
     }
 }

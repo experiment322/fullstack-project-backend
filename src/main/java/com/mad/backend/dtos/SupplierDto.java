@@ -12,14 +12,22 @@ public class SupplierDto {
     private String address;
 
     public SupplierDto() {
-        // initialize with non-existing ids to prevent exception throwing when used by repositories
-        this.id = -1;
+        // REST constructor
     }
 
     public SupplierDto(Supplier supplier) {
         this.id = supplier.getId();
         this.name = supplier.getName();
         this.address = supplier.getAddress();
+    }
+
+    public Supplier transformBack() {
+        Supplier supplier = new Supplier();
+        supplier.setId(this.id);
+        supplier.setName(this.name);
+        supplier.setAddress(this.address);
+
+        return supplier;
     }
 
     public Integer getId() {

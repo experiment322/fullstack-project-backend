@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface SupplierService {
 
-    List<SupplierDto> getAllSuppliers();
+    List<SupplierDto> retrieveSuppliers();
 
     SupplierDto createSupplier(SupplierDto supplierDto);
 
     SupplierDto updateSupplier(SupplierDto supplierDto);
 
-    SupplierDto deleteSupplier(Integer supplierId);
+    Integer deleteSupplier(Integer supplierId);
 }

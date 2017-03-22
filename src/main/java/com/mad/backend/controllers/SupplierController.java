@@ -23,8 +23,8 @@ public class SupplierController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseDto<List<SupplierDto>> listSuppliers() {
-        return new ResponseDto<>(supplierService.getAllSuppliers());
+    public ResponseDto<List<SupplierDto>> retrieveSuppliers() {
+        return new ResponseDto<>(supplierService.retrieveSuppliers());
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -38,7 +38,7 @@ public class SupplierController {
     }
 
     @RequestMapping(value = "/delete/{supplierId}", method = RequestMethod.DELETE)
-    public ResponseDto<SupplierDto> deleteSupplier(@PathVariable Integer supplierId) {
+    public ResponseDto<Integer> deleteSupplier(@PathVariable Integer supplierId) {
         return new ResponseDto<>(supplierService.deleteSupplier(supplierId));
     }
 }

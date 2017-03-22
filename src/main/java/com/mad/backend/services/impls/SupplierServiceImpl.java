@@ -5,6 +5,8 @@ import com.mad.backend.models.Supplier;
 import com.mad.backend.repositories.ProductRepository;
 import com.mad.backend.repositories.SupplierRepository;
 import com.mad.backend.services.SupplierService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,55 +19,73 @@ import java.util.List;
 @Service
 public class SupplierServiceImpl implements SupplierService {
 
+    private final Logger logger;
     private final SupplierRepository supplierRepository;
     private final ProductRepository productRepository;
 
     @Autowired
     public SupplierServiceImpl(SupplierRepository supplierRepository, ProductRepository productRepository) {
+        this.logger = LoggerFactory.getLogger(this.getClass());
         this.supplierRepository = supplierRepository;
         this.productRepository = productRepository;
     }
 
     @Override
-    public List<SupplierDto> getAllSuppliers() {
+    public List<SupplierDto> retrieveSuppliers() {
         List<Supplier> suppliers = new ArrayList<>();
         supplierRepository.findAll().forEach(suppliers::add);
+
         List<SupplierDto> result = new ArrayList<>();
         for (Supplier supplier : suppliers) {
             result.add(new SupplierDto(supplier));
         }
+
         return result;
     }
 
     @Override
     public SupplierDto createSupplier(SupplierDto supplierDto) {
-        Supplier supplier = new Supplier();
-        supplier.setName(supplierDto.getName());
-        supplier.setAddress(supplierDto.getAddress());
-        supplierRepository.save(supplier);
-        return new SupplierDto(supplier);
+        try {
+            if (supplierDto.getId() == null) {
+                Supplier supplier = supplierRepository.save(supplierDto.transformBack());
+                return new SupplierDto(supplier);
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Error creating supplier", e);
+            return null;
+        }
     }
 
     @Override
     public SupplierDto updateSupplier(SupplierDto supplierDto) {
-        Supplier supplier = supplierRepository.findOne(supplierDto.getId());
-        if (supplier != null) {
-            supplier.setName(supplierDto.getName());
-            supplier.setAddress(supplierDto.getAddress());
-            supplierRepository.save(supplier);
-            return new SupplierDto(supplier);
+        try {
+            if (supplierRepository.exists(supplierDto.getId())) {
+                Supplier supplier = supplierRepository.save(supplierDto.transformBack());
+                return new SupplierDto(supplier);
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Error updating supplier", e);
+            return null;
         }
-        return null;
     }
 
     @Override
-    public SupplierDto deleteSupplier(Integer supplierId) {
-        Supplier supplier = supplierRepository.findOne(supplierId);
-        if (supplier != null) {
-            productRepository.delete(supplier.getProducts());
-            supplierRepository.delete(supplierId);
-            return new SupplierDto(supplier);
+    public Integer deleteSupplier(Integer supplierId) {
+        try {
+            if (supplierRepository.exists(supplierId)) {
+                productRepository.delete(supplierRepository.findOne(supplierId).getProducts());
+                supplierRepository.delete(supplierId);
+                return supplierId;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Error deleting supplier", e);
+            return null;
         }
-        return null;
     }
 }
