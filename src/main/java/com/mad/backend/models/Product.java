@@ -1,6 +1,9 @@
 package com.mad.backend.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 /**
  * Created by alex on 2/25/17.
@@ -8,25 +11,22 @@ import javax.persistence.*;
 @Entity
 public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(nullable = false)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false) @Min(1) @Max(999999)
     private Integer price;
 
-    @Column(nullable = false)
+    @Column(nullable = false) @Min(0) @Max(999999999)
     private Integer quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "supplier_id", nullable = false)
     private Supplier supplier;
 
-    @Column(nullable = false)
+    @Column(nullable = false) @Pattern(regexp = "^[!-~][ -~]{8,253}[!-~]$")
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false) @Pattern(regexp = "^[!-~][ -~]{8,253}[!-~]$")
     private String description;
 
     public Product() {

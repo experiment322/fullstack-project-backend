@@ -1,6 +1,7 @@
 package com.mad.backend.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**
@@ -9,15 +10,13 @@ import java.util.List;
 @Entity
 public class Supplier {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(nullable = false)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false) @Pattern(regexp = "^[!-~][ -~]{8,253}[!-~]$")
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false) @Pattern(regexp = "^[!-~][ -~]{8,253}[!-~]$")
     private String address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "supplier")
